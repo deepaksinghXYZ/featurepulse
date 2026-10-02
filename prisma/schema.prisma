@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql" // or "sqlite" for local dev
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Status {
+  UNDER_REVIEW
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+}
+
+model Feedback {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String   @default("Feature")
+  status      Status   @default(UNDER_REVIEW)
+  upvotes     Int      @default(0)
+  authorName  String   @default("Anonymous")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
