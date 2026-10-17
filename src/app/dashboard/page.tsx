@@ -13,7 +13,9 @@ export default function AdminDashboard() {
     try {
       const res = await fetch('/api/feedback');
       const data = await res.json();
-      setItems(data);
+      setItems(res.ok && Array.isArray(data) ? data : []);
+    } catch {
+      setItems([]);
     } finally {
       setLoading(false);
     }

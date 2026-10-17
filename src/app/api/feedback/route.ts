@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+// Prisma needs the Node.js runtime, and these handlers must run per request
+// (not be prerendered at build time).
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const feedback = await db.feedback.findMany({
